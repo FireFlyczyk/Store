@@ -8,5 +8,7 @@ namespace OrderService.Data
         IEnumerable<Order> GetAllOrders();
         Order GetOrderById(int id);
         void CreateOrder(Order order);
+        void DeleteOrder(Order order);
+        void UpdateOrder(Order order);
     }
 }

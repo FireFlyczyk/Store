@@ -31,6 +31,15 @@ namespace OrderService.Data
             }
         }
 
+        public void DeleteOrder(Order order)
+        {
+            if (order == null)
+            {
+                throw new ArgumentNullException(nameof(order));
+            }
+            _context.Orders.Remove(order);
+        }
+
         public IEnumerable<Order> GetAllOrders()
         {
             try
@@ -65,6 +74,16 @@ namespace OrderService.Data
             {
                 throw new Exception("Failed to save changes.", ex);
             }
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            if (order == null)
+            {
+                throw new ArgumentNullException(nameof(order));
+            }
+            _context.Orders.Update(order);
+            _context.SaveChanges();
         }
     }
 }
