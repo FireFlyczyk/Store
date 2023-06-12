@@ -10,6 +10,7 @@ namespace OrderService.MappingProfile
         {
             CreateMap<Order, OrderReadDto>();
             CreateMap<OrderCreateDto, Order>();
+            CreateMap<OrderUpdateDto, Order>();
         }
     }
 }
