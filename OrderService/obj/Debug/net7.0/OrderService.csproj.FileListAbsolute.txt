@@ -1,4 +1,3 @@
-D:\IT\Store\OrderService\bin\Debug\net7.0\appsettings.Development.json
 D:\IT\Store\OrderService\bin\Debug\net7.0\appsettings.json
 D:\IT\Store\OrderService\bin\Debug\net7.0\OrderService.exe
 D:\IT\Store\OrderService\bin\Debug\net7.0\OrderService.deps.json

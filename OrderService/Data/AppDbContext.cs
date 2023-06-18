@@ -7,9 +7,9 @@ namespace OrderService.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
+            Database.Migrate();
         }
+
         public DbSet<Order> Orders { get; set; }
     }
 }
-
