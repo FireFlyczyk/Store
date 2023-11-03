@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Data;
 using OrderService.Dtos;
+using OrderService.MessageBus;
 using OrderService.Models;
 
 namespace OrderService.Controllers
@@ -12,11 +13,13 @@ namespace OrderService.Controllers
     {
         private readonly IOrderRepository _repository;
         private readonly IMapper _mapper;
+        private readonly IMessageBus _messageBus;
 
-        public OrdersController(IOrderRepository repository, IMapper mapper)
+        public OrdersController(IOrderRepository repository, IMapper mapper,IMessageBus messageBus)
         {
             _repository = repository;
             _mapper = mapper;
+            _messageBus = messageBus;
         }
         [HttpGet]
         public ActionResult<IEnumerable<OrderReadDto>> GetAllOrders()
@@ -41,6 +44,17 @@ namespace OrderService.Controllers
             _repository.CreateOrder(order);
             _repository.SaveChanges();
             var orderReadDto = _mapper.Map<OrderReadDto>(order);
+            try
+            {
+              var orderfromSendDto = _mapper.Map<OrderSendDto>(orderReadDto);
+              orderfromSendDto.Event = "Order_Created";
+              _messageBus.PublishNewOrder(orderfromSendDto);
+            }
+            catch (Exception ex) 
+            {
+                
+              Console.WriteLine("Failed to send message: " + ex.Message);
+            }
             return CreatedAtRoute("GetOrderbyId", new { Id = orderReadDto.Id }, orderReadDto);
         }
 

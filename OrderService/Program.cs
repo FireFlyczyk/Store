@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrderService.Data;
+using OrderService.MessageBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddSingleton<IMessageBus, MessageBus>();
 
 var app = builder.Build();
 
